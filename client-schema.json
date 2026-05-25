@@ -1,0 +1,50 @@
+{
+  "_description": "CC Pitch Deck - Client Data Schema. Fill this per client from Fireflies transcript + website assessment.",
+
+  "clinic_name": "",
+  "owner_name": "",
+  "location": "",
+  "secondary_location": "",
+
+  "google_rating": "",
+  "google_reviews": "",
+  "years_experience": "",
+  "social_followers": "",
+
+  "what_built_intro": "Paragraph describing what they've already achieved - their experience, reputation, what's working.",
+
+  "task1_hook": "Short punchy quote for the decorative box",
+  "task1_title": "Branding & Positioning",
+  "task1_body": "What specifically needs to change and why it matters for their clinic.",
+
+  "task2_hook": "",
+  "task2_title": "Website Improvements",
+  "task2_body": "",
+
+  "task3_hook": "",
+  "task3_title": "Offer & Pricing Strategy",
+  "task3_body": "",
+
+  "task4_hook": "",
+  "task4_title": "Advertising",
+  "task4_body": "",
+
+  "task5_hook": "",
+  "task5_title": "CRM & Systems",
+  "task5_body": "",
+
+  "task6_hook": "",
+  "task6_title": "Tech Stack & Operations",
+  "task6_body": "",
+
+  "bonus_hook": "",
+  "bonus_title": "Lead Magnet",
+  "bonus_body": "",
+
+  "goals_html": "<p>Goal 1</p><p>Goal 2</p><p>Goal 3</p>",
+
+  "weekly_price": "$699",
+  "discount_name": "Aesthetic Business Masters Discount",
+  "discount_price": "$499",
+  "discount_expiry": "June 30th"
+}

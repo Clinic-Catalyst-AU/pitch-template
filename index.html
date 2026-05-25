@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>{{CLINIC_NAME}} - Clinic Catalyst Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark: #0A2A28;
+  --dark-alt: #0D3D38;
+  --teal: #00B4A0;
+  --teal-bright: #00D4BC;
+  --peach: #E8A87C;
+  --peach-light: #F5C7A0;
+  --white: #FFFFFF;
+  --text-faint: rgba(255,255,255,0.6);
+  --text-mid: rgba(255,255,255,0.85);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Open Sans',sans-serif; background:#000; color:var(--white); overflow:hidden; }
+
+/* DECK */
+.deck { height:100vh; overflow-y:auto; scroll-snap-type:y mandatory; }
+.slide { height:100vh; scroll-snap-align:start; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+
+/* CANVA IMAGE SLIDES */
+.slide-img { padding:0; }
+.slide-img img { width:100%; height:100%; object-fit:contain; background:#000; }
+
+/* HTML SLIDES */
+.slide-html { padding:3rem 4rem; background:var(--dark); }
+.slide-html.alt { background:var(--dark-alt); }
+.slide-html.teal-bg { background:linear-gradient(135deg, #073B36 0%, #0A2A28 100%); }
+.slide-html { background:linear-gradient(160deg, #0A2A28 0%, #0E3D3A 40%, #0A2A28 100%); }
+.slide-html.alt { background:linear-gradient(160deg, #0D3D38 0%, #0A2A28 50%, #0D3D38 100%); }
+.inner { max-width:1100px; width:100%; position:relative; z-index:2; }
+
+/* DECORATIVE */
+.dot-overlay { position:absolute; inset:0; opacity:0.05; background-image:radial-gradient(circle,var(--teal) 1px,transparent 1px); background-size:50px 50px; pointer-events:none; }
+.glow { position:absolute; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle,rgba(0,180,160,0.12) 0%,transparent 70%); pointer-events:none; }
+.glow-tl { top:-200px; left:-200px; }
+.glow-br { bottom:-200px; right:-200px; }
+
+/* TYPOGRAPHY */
+.label { font-family:'Montserrat',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--teal-bright); margin-bottom:0.75rem; }
+.label-peach { color:var(--peach); }
+h2 { font-family:'Montserrat',sans-serif; font-size:clamp(1.4rem,3vw,2.2rem); font-weight:800; text-transform:uppercase; line-height:1.1; margin-bottom:1rem; }
+h3 { font-family:'Montserrat',sans-serif; font-size:1rem; font-weight:700; text-transform:uppercase; margin-bottom:0.6rem; }
+.teal { color:var(--teal-bright); }
+.peach { color:var(--peach); }
+p { font-size:0.9rem; color:var(--text-mid); font-weight:300; line-height:1.8; }
+
+/* LAYOUT */
+.split { display:grid; grid-template-columns:2fr 3fr; gap:3rem; align-items:center; }
+.split-even { display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; align-items:center; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+.grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; }
+.mt-1 { margin-top:1rem; }
+.mt-2 { margin-top:2rem; }
+
+/* TASK BADGE */
+.task-num { font-family:'Montserrat',sans-serif; font-size:0.6rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--peach); display:inline-block; border:1px solid rgba(232,168,124,0.3); padding:0.25rem 0.7rem; border-radius:4px; margin-bottom:0.8rem; }
+
+/* QUOTE */
+.quote { border-left:3px solid var(--peach); padding:0.8rem 1.2rem; margin-bottom:1.5rem; background:rgba(232,168,124,0.04); border-radius:0 6px 6px 0; }
+.quote p { font-style:italic; color:var(--peach-light); font-size:1rem; line-height:1.5; }
+
+/* BROWSER MOCKUP */
+.browser-frame { border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); background:#111; }
+.browser-bar { height:28px; background:#1a1a1a; display:flex; align-items:center; padding:0 10px; gap:6px; }
+.browser-dot { width:8px; height:8px; border-radius:50%; background:#333; }
+.browser-dot.r { background:#ff5f56; }
+.browser-dot.y { background:#ffbd2e; }
+.browser-dot.g { background:#27c93f; }
+.browser-frame img { width:100%; display:block; }
+.browser-frame video { width:100%; display:block; cursor:pointer; }
+.browser-frame .placeholder { height:300px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#0a1e2b,#0d2938); color:var(--text-faint); font-size:0.8rem; font-style:italic; }
+.play-hint { text-align:center; margin-top:0.6rem; font-size:0.75rem; color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.08em; }
+
+/* SCROLL ARROW */
+.scroll-arrow { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); text-align:center; z-index:10; animation:bounce 2s infinite; cursor:pointer; }
+.scroll-arrow span { display:block; font-family:'Montserrat',sans-serif; font-size:0.6rem; font-weight:600; color:rgba(255,255,255,0.4); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.4rem; }
+.scroll-arrow .arrow { font-size:1.8rem; color:var(--teal-bright); }
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+/* DEMO LINK */
+.demo-link { display:inline-flex; align-items:center; gap:0.4rem; color:var(--teal-bright); font-family:'Montserrat',sans-serif; font-size:0.72rem; font-weight:700; text-decoration:none; letter-spacing:0.08em; text-transform:uppercase; margin-top:1rem; transition:color 0.2s; }
+.demo-link:hover { color:#00ffec; }
+
+/* STAT */
+.stat { text-align:center; padding:0.8rem; }
+.stat-number { font-family:'Montserrat',sans-serif; font-size:clamp(1.6rem,3vw,2.4rem); font-weight:900; color:var(--teal-bright); }
+.stat-label { font-size:0.68rem; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.1em; margin-top:0.2rem; font-family:'Montserrat',sans-serif; font-weight:600; }
+
+/* CARD */
+.card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:8px; padding:1.3rem; }
+.card h4 { font-family:'Montserrat',sans-serif; font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--teal-bright); margin-bottom:0.4rem; }
+.card p { font-size:0.8rem; color:var(--text-faint); line-height:1.6; }
+
+/* PRICING */
+.price-card { background:rgba(0,180,160,0.06); border:2px solid var(--teal); border-radius:12px; padding:2rem; text-align:center; }
+.price-tag { font-family:'Montserrat',sans-serif; font-size:clamp(2rem,4vw,3rem); font-weight:900; color:var(--teal-bright); }
+.price-period { font-size:0.75rem; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.1em; }
+.includes-list { list-style:none; text-align:left; margin-top:1.2rem; }
+.includes-list li { padding:0.35rem 0; font-size:0.78rem; color:var(--text-mid); border-bottom:1px solid rgba(255,255,255,0.04); display:flex; align-items:center; gap:0.4rem; }
+.includes-list li::before { content:"\2713"; color:var(--teal-bright); font-weight:700; }
+.discount-badge { display:inline-block; background:var(--peach); color:var(--dark); font-family:'Montserrat',sans-serif; font-size:0.7rem; font-weight:800; padding:0.35rem 0.9rem; border-radius:4px; text-transform:uppercase; letter-spacing:0.06em; margin-top:1rem; }
+
+/* FAQ */
+.faq-item { padding:0.8rem 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+.faq-q { font-family:'Montserrat',sans-serif; font-size:0.75rem; font-weight:700; color:var(--peach); margin-bottom:0.3rem; }
+.faq-a { font-size:0.8rem; color:var(--text-faint); }
+
+/* SIGNATURE */
+.sig-line { border-bottom:1px solid rgba(255,255,255,0.25); padding-bottom:0.5rem; margin-top:2rem; min-width:220px; display:inline-block; }
+.sig-label { font-size:0.65rem; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.1em; margin-top:0.3rem; }
+
+/* UI */
+.slide-counter { position:fixed; bottom:1.2rem; right:1.5rem; font-family:'Montserrat',sans-serif; font-size:0.65rem; font-weight:600; color:rgba(255,255,255,0.25); letter-spacing:0.08em; z-index:100; }
+.nav-hint { position:fixed; bottom:1.2rem; left:1.5rem; font-family:'Montserrat',sans-serif; font-size:0.55rem; color:rgba(255,255,255,0.15); letter-spacing:0.08em; z-index:100; }
+
+/* PRINT */
+@media print {
+  .deck { overflow:visible; scroll-snap-type:none; }
+  .slide { min-height:100vh; page-break-after:always; page-break-inside:avoid; }
+  .slide-counter, .nav-hint { display:none; }
+}
+@media (max-width:768px) {
+  .slide-html { padding:2rem 1.5rem; }
+  .split, .split-even { grid-template-columns:1fr; gap:1.5rem; }
+  .grid-4 { grid-template-columns:1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- ========== SLIDE: COVER (Canva static) ========== -->
+<section class="slide slide-img" style="position:relative;">
+  <img src="{{SLIDES_PATH}}cover.png" alt="Cover">
+  <div class="scroll-arrow" onclick="document.getElementById('deck').scrollBy({top:window.innerHeight,behavior:'smooth'})">
+    <span>Click to begin</span>
+    <div class="arrow">&#8595;</div>
+  </div>
+</section>
+
+<!-- ========== SLIDE: SOCIAL PROOF (Canva static - high-res) ========== -->
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}social-proof.png" alt="Clinics we've worked with"></section>
+
+<!-- ========== SLIDE: WHAT YOU'VE BUILT (editable) ========== -->
+<section class="slide slide-html" data-editable="true">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <div class="split" style="grid-template-columns:1fr 2fr; gap:2.5rem;">
+      <div style="text-align:center;">
+        <p class="label label-peach">Your clinic right now</p>
+        <h2 style="font-size:clamp(1.2rem,2.5vw,1.8rem);">What You've <span class="teal">Built Already</span></h2>
+        {{OWNER_PHOTO_HTML}}
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        {{BUILT_TILE_1}}
+        {{BUILT_TILE_2}}
+        {{BUILT_TILE_3}}
+        {{BUILT_TILE_4}}
+        {{BUILT_TILE_5}}
+        {{BUILT_TILE_6}}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE: TASK 1 (editable) ========== -->
+<section class="slide slide-html alt" data-editable="true">
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <p class="label">Quick wins we'd implement for you</p>
+    <div class="split">
+      <div>
+        <span class="task-num">Task One</span>
+        <h2>{{TASK1_TITLE}}</h2>
+        <div class="quote"><p>"{{TASK1_HOOK}}"</p></div>
+        <p>{{TASK1_BODY}}</p>
+        {{TASK1_LINK_HTML}}
+      </div>
+      <div>
+        {{TASK1_IMAGE_HTML}}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE: TASK 2 (editable) ========== -->
+<section class="slide slide-html" data-editable="true">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num">Task Two</span>
+        <h2>{{TASK2_TITLE}}</h2>
+        <div class="quote"><p>"{{TASK2_HOOK}}"</p></div>
+        <p>{{TASK2_BODY}}</p>
+        {{TASK2_LINK_HTML}}
+      </div>
+      <div>
+        {{TASK2_IMAGE_HTML}}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE: TASK 3 (editable) ========== -->
+<section class="slide slide-html alt" data-editable="true">
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num">Task Three</span>
+        <h2>{{TASK3_TITLE}}</h2>
+        <div class="quote"><p>"{{TASK3_HOOK}}"</p></div>
+        <p>{{TASK3_BODY}}</p>
+        {{TASK3_LINK_HTML}}
+      </div>
+      <div>
+        {{TASK3_IMAGE_HTML}}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE: TASK 4 (editable) ========== -->
+<section class="slide slide-html" data-editable="true">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num">Task Four</span>
+        <h2>{{TASK4_TITLE}}</h2>
+        <div class="quote"><p>"{{TASK4_HOOK}}"</p></div>
+        <p>{{TASK4_BODY}}</p>
+        {{TASK4_LINK_HTML}}
+      </div>
+      <div>
+        {{TASK4_IMAGE_HTML}}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE: TASK 5 (editable) ========== -->
+<section class="slide slide-html alt" data-editable="true">
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num">Task Five</span>
+        <h2>{{TASK5_TITLE}}</h2>
+        <div class="quote"><p>"{{TASK5_HOOK}}"</p></div>
+        <p>{{TASK5_BODY}}</p>
+        {{TASK5_LINK_HTML}}
+      </div>
+      <div>
+        {{TASK5_IMAGE_HTML}}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE: TASK 6 (editable) ========== -->
+<section class="slide slide-html" data-editable="true">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num">Task Six</span>
+        <h2>{{TASK6_TITLE}}</h2>
+        <div class="quote"><p>"{{TASK6_HOOK}}"</p></div>
+        <p>{{TASK6_BODY}}</p>
+        {{TASK6_LINK_HTML}}
+      </div>
+      <div>
+        {{TASK6_IMAGE_HTML}}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE: BONUS (editable) ========== -->
+<section class="slide slide-html teal-bg" data-editable="true">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num" style="border-color:var(--peach); color:var(--peach);">Bonus</span>
+        <h2>{{BONUS_TITLE}}</h2>
+        <div class="quote"><p>"{{BONUS_HOOK}}"</p></div>
+        <p>{{BONUS_BODY}}</p>
+        {{BONUS_LINK_HTML}}
+      </div>
+      <div>
+        {{BONUS_IMAGE_HTML}}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== STATIC CANVA SLIDES ========== -->
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}transition.png" alt="That's where we step in"></section>
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}campaign-process.png" alt="Campaign process"></section>
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}sales-process.png" alt="Sales process"></section>
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}branding.png" alt="Branding"></section>
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}systems.png" alt="Systems installed"></section>
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}your-part.png" alt="Your part in success"></section>
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}case-studies-12.png" alt="Case studies 1 and 2"></section>
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}case-studies-34.png" alt="Case studies 3 and 4"></section>
+
+<!-- ========== SLIDE: GOALS (editable) ========== -->
+<section class="slide slide-html" data-editable="true">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <p class="label label-peach">Tailored for {{CLINIC_NAME}}</p>
+    <h2>Your Goals & <span class="teal">Objectives</span></h2>
+    <div style="max-width:800px; margin-top:1rem;">
+      {{GOALS_HTML}}
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE: INVESTMENT (editable) ========== -->
+<section class="slide slide-html alt" data-editable="true">
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split-even">
+      <div>
+        <p class="label">Investment</p>
+        <h2>Meta Ads &<br><span class="teal">Lead Follow Up</span></h2>
+        <p style="margin-bottom:1.5rem;">We do all the hard work. You wait for leads and do what you're best at - providing an incredible service.</p>
+        <div class="faq-item">
+          <p class="faq-q">What should my ad spend be?</p>
+          <p class="faq-a">We recommend $30/day minimum.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">Do I have to make the videos?</p>
+          <p class="faq-a">No. We do that. We just ask for raw footage - authentic works best.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">Are calls, SMS & emails included?</p>
+          <p class="faq-a">All inclusive - compliance cert, calling leads, SMS credits, email, CRM access.</p>
+        </div>
+      </div>
+      <div>
+        <div class="price-card">
+          <p class="price-period">Weekly</p>
+          <div class="price-tag">{{WEEKLY_PRICE}}</div>
+          <ul class="includes-list">
+            <li>Creating Offers & Ad Copy</li>
+            <li>Creating Content for Ads</li>
+            <li>Email & SMS Notifications</li>
+            <li>CRM Automations</li>
+            <li>Calling & Responding to Leads</li>
+            <li>Technical Set-Up</li>
+            <li>Ongoing Support</li>
+          </ul>
+          <div class="discount-badge">{{DISCOUNT_NAME}} {{DISCOUNT_PRICE}}</div>
+          <p style="font-size:0.65rem; color:var(--text-faint); margin-top:0.4rem;">PLUS Save $799 on Set Up Fee</p>
+          <p style="font-size:0.6rem; color:var(--text-faint); margin-top:0.2rem;">(Offer expires {{DISCOUNT_EXPIRY}})</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== STATIC CANVA SLIDES (services + close) ========== -->
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}bonus-geo.png" alt="Bonus GEO"></section>
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}service-google.png" alt="Google Ads"></section>
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}service-website.png" alt="Website Build"></section>
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}service-email.png" alt="Email & SMS"></section>
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}service-social.png" alt="Social Media"></section>
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}service-seo.png" alt="SEO & GEO"></section>
+<section class="slide slide-img"><img src="{{SLIDES_PATH}}ready-to-start.png" alt="Ready to start"></section>
+
+<!-- ========== SLIDE: TERMS (editable - clinic name) ========== -->
+<section class="slide slide-html" data-editable="true">
+  <div class="dot-overlay"></div>
+  <div class="inner">
+    <p class="label">Final step</p>
+    <h2>Project <span class="teal">Acceptance</span></h2>
+    <p style="max-width:700px;">This proposal remains confidential between Mint Peach Media and <strong>{{CLINIC_NAME}}</strong> and must not be disclosed to any third party without written approval of Mint Peach Media.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5rem; margin-top:2rem;">
+      <div class="card">
+        <h4>Agreement</h4>
+        <p>Month by month. No lock-in. 30 days written notice to terminate.</p>
+      </div>
+      <div class="card">
+        <h4>Payment</h4>
+        <p>Management fee billed at the start of each week.</p>
+      </div>
+      <div class="card">
+        <h4>Commencement</h4>
+        <p>Project begins from date initial payment is received.</p>
+      </div>
+    </div>
+    <div class="split-even" style="max-width:500px; margin-top:2rem;">
+      <div><div class="sig-line"></div><p class="sig-label">Signature</p></div>
+      <div><div class="sig-line"></div><p class="sig-label">Date</p></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div class="slide-counter" id="counter">1 / --</div>
+<div class="nav-hint">Arrow keys to navigate &middot; F for fullscreen</div>
+
+<script>
+const deck = document.getElementById('deck');
+const slides = document.querySelectorAll('.slide');
+const counter = document.getElementById('counter');
+const total = slides.length;
+counter.textContent = '1 / ' + total;
+
+function updateCounter() {
+  const current = Math.round(deck.scrollTop / window.innerHeight) + 1;
+  counter.textContent = current + ' / ' + total;
+}
+deck.addEventListener('scroll', updateCounter);
+
+document.addEventListener('keydown', function(e) {
+  const h = window.innerHeight;
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); deck.scrollBy({top:h, behavior:'smooth'}); }
+  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); deck.scrollBy({top:-h, behavior:'smooth'}); }
+  if (e.key === 'Home') { e.preventDefault(); deck.scrollTo({top:0, behavior:'smooth'}); }
+  if (e.key === 'End') { e.preventDefault(); deck.scrollTo({top:deck.scrollHeight, behavior:'smooth'}); }
+  if (e.key === 'f' || e.key === 'F') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+});
+</script>
+</body>
+</html>

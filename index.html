@@ -129,9 +129,32 @@ p { font-size:0.9rem; color:var(--text-mid); font-weight:300; line-height:1.8; }
   .slide-counter, .nav-hint { display:none; }
 }
 @media (max-width:768px) {
-  .slide-html { padding:2rem 1.5rem; }
+  body { overflow:auto; }
+  .deck { height:auto; overflow-y:auto; scroll-snap-type:none; }
+  .slide { min-height:auto; height:auto; padding:2.5rem 1.5rem; scroll-snap-align:none; }
+  .slide-img { padding:0; height:auto; min-height:auto; }
+  .slide-img img { height:auto; width:100%; object-fit:contain; }
+  .slide-html { padding:2.5rem 1.5rem; }
+  .inner { width:100%; }
   .split, .split-even { grid-template-columns:1fr; gap:1.5rem; }
-  .grid-4 { grid-template-columns:1fr 1fr; }
+  .grid-2 { grid-template-columns:1fr; gap:1rem; }
+  .grid-4 { grid-template-columns:1fr 1fr; gap:0.8rem; }
+  h2 { font-size:1.3rem; }
+  .task-num { font-size:0.55rem; }
+  .quote { padding:0.6rem 1rem; margin-bottom:1rem; }
+  .quote p { font-size:0.9rem; }
+  p { font-size:0.85rem; }
+  .stat-number { font-size:1.6rem; }
+  .browser-frame .placeholder { height:180px; }
+  .price-card { padding:1.5rem; }
+  .price-tag { font-size:2rem; }
+  .card { padding:1rem; }
+  .card p { font-size:0.75rem; }
+  .scroll-arrow { display:none; }
+  .slide-counter { display:none; }
+  .nav-hint { display:none; }
+  .faq-item { padding:0.6rem 0; }
+  .sig-line { min-width:150px; }
 }
 </style>
 </head>
